@@ -87,7 +87,11 @@ export const getUpcoming = (args) => {
     const [, idPart] = args.queryKey;
     const { page } = idPart;
     return fetch(
-            `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
+            `/api/movies/tmdb/upcoming?page=${page}`, {
+                headers: {
+                    'Authorization': window.localStorage.getItem('token')
+                }
+            }
         ).then((response) => {
             if (!response.ok) {
                 throw new Error(response.json().message);
@@ -213,4 +217,24 @@ export const getTopRatedTV = (args) => {
         .catch((error) => {
             throw error
         });
+};
+
+export const login = (username, password) => {
+    return fetch('/api/users', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify({ username: username, password: password })
+    }).then(res => res.json())
+};
+
+export const signup = (username, password) => {
+    return fetch('/api/users?action=register', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify({ username: username, password: password })
+    }).then(res => res.json())
 };

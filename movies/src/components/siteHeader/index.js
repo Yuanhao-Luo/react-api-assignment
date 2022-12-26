@@ -22,7 +22,7 @@ const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const SiteHeader = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const {user, setUser} = useContext(MoviesContext);
+  const {isAuthenticated, signout} = useContext(MoviesContext);
   const open = Boolean(anchorEl);
 
   const theme = useTheme();
@@ -38,7 +38,7 @@ const SiteHeader = () => {
     { label: "TV", path: "/tv/top_rated" },
   ];
 
-  if(user !== null){
+  if(isAuthenticated){
     menuOptions.push({ label: "Favorites", path: "/movies/favorites" });
   }
 
@@ -51,7 +51,7 @@ const SiteHeader = () => {
   };
 
   const handleLogout = (e) => {
-    setUser(null)
+    signout(null)
   }
 
   return (
@@ -66,7 +66,7 @@ const SiteHeader = () => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             All you ever wanted to know about Movies!
           </Typography>
-          {!user ? 
+          {!isAuthenticated ? 
             <Button  
               variant="text" 
               color="inherit" 

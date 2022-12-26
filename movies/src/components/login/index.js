@@ -1,61 +1,30 @@
 import React, { useState, useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { FirebaseApp } from "../../firebase/FirebaseApp";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import DialogContentText from '@mui/material/DialogContentText';
+// import DialogContentText from '@mui/material/DialogContentText';
 
 const Login = (props) => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const {setUser} = useContext(MoviesContext);
-
-    const app = FirebaseApp();
-    const auth = getAuth(app);
+    // const [error, setError] = useState('');
+    const {authenticate, register} = useContext(MoviesContext);
 
     const handleLogin = () => {
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            setUser(user)
-            setError('')
-            props.action(false)
-            // ...
-        })
-        .catch((error) => {
-            // const errorCode = error.code;
-            const errorMessage = error.message.substring(9);
-            setError(errorMessage)
-        });
+        authenticate(username, password);
+        props.action(false)
     }
 
     const handleRegister = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            setUser(user)
-            setError('')
-            props.action(false)
-            // ...
-        })
-        .catch((error) => {
-            // const errorCode = error.code;
-            const errorMessage = error.message.substring(9);
-            console.log(errorMessage)
-            // ..
-            setError(errorMessage)
-        });
+        register(username, password)
+        props.action(false);
     }
 
-    const handleEmail = (e) => {
-        setEmail(e.target.value)
+    const handleUsername = (e) => {
+        setUsername(e.target.value)
     }
 
     const handlePassword = (e) => {
@@ -69,13 +38,13 @@ const Login = (props) => {
             <TextField
                 autoFocus
                 margin="dense"
-                id="email"
-                label="Email Address"
-                type="email"
-                value={email}
+                id="username"
+                label="Username"
+                type="username"
+                value={username}
                 fullWidth
                 variant="standard"
-                onChange={handleEmail}
+                onChange={handleUsername}
             />
             <TextField
                 autoFocus
@@ -88,11 +57,11 @@ const Login = (props) => {
                 variant="standard"
                 onChange={handlePassword}
             />
-            {error &&
+            {/* {error &&
                 <DialogContentText id="error_info" color="red">
                     {error}
                 </DialogContentText>
-            }
+            } */}
             
         </DialogContent>
 
