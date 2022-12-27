@@ -5,22 +5,34 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-// import DialogContentText from '@mui/material/DialogContentText';
+import DialogContentText from '@mui/material/DialogContentText';
 
 const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    // const [error, setError] = useState('');
+    const [error, setError] = useState('');
     const {authenticate, register} = useContext(MoviesContext);
 
     const handleLogin = () => {
-        authenticate(username, password);
-        props.action(false)
+        const res = authenticate(username, password);
+        
+        if(res){
+            setError("Wrong password or username")
+        }else{
+            props.action(false)
+        }
+        
     }
 
     const handleRegister = () => {
-        register(username, password)
-        props.action(false);
+        const res = register(username, password)
+
+        if(res){
+            setError("Account exist")
+        }else{
+            props.action(false);
+        }
+        
     }
 
     const handleUsername = (e) => {
@@ -57,11 +69,11 @@ const Login = (props) => {
                 variant="standard"
                 onChange={handlePassword}
             />
-            {/* {error &&
+            {error &&
                 <DialogContentText id="error_info" color="red">
                     {error}
                 </DialogContentText>
-            } */}
+            }
             
         </DialogContent>
 

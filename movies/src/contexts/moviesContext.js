@@ -84,9 +84,12 @@ const MoviesContextProvider = (props) => {
         setToken(result.token)
         setIsAuthenticated(true);
         setUserName(username);
+        loadFavourites();
         localStorage.setItem("username", username);
         localStorage.setItem("authenticated", true)
       }
+      console.log("before return")
+      return (result.code == 201) ? true : false
     };
   
     const register = async (username, password) => {

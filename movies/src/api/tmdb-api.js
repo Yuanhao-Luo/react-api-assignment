@@ -231,16 +231,15 @@ export const getTopRatedTV = (args) => {
     const [, idPart] = args.queryKey;
     const { page } = idPart;
     return fetch(
-            `/api/movies/tmdb/top_rated?page=${page}`
-        ).then((response) => {
-            if (!response.ok) {
-                throw new Error(response.json().message);
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            throw error
-        });
+        `/api/movies/tmdb/top_rated?page=${page}`
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    }).catch((error) => {
+        console.log(error)
+    })
 };
 
 export const login = (username, password) => {
@@ -251,6 +250,7 @@ export const login = (username, password) => {
         method: 'post',
         body: JSON.stringify({ username: username, password: password })
     }).then(res => res.json())
+
 };
 
 export const signup = (username, password) => {
