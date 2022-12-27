@@ -10,7 +10,7 @@ const AddToFavoritesIcon = ({ movie }) => {
   const handleAddToFavorites = (e) => {
     e.preventDefault();
     context.addToFavorites(movie);
-    addFavourite(context.userName, movie.id)
+    // addFavourite(context.userName, movie.id)
   };
 
   return (

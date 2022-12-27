@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { login, signup } from "../api/tmdb-api";
+import { login, signup, getFavourites, addFavourite, deleteFavourite } from "../api/tmdb-api";
 
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
   const [favorites, setFavorites] = useState( [] )
+  const [isFavoritesLoaded, setFavouriteLoaded] = useState(false)
   const [myReviews, setMyReviews] = useState( {} ) 
   const [mustWatch, setMustWatch] = useState( [] )
   const [user, setUser] = useState( null );
@@ -17,21 +18,43 @@ const MoviesContextProvider = (props) => {
 
   const addToFavorites = (movie) => {
     let newFavorites = [];
-    if (!favorites.includes(movie.id)){
-      newFavorites = [...favorites, movie.id];
+    const id = movie.id.toString();
+    if (!favorites.includes(id)){
+      newFavorites = [...favorites, id];
     }
     else{
       newFavorites = [...favorites];
     }
     setFavorites(newFavorites)
+
+    addFavourite(userName, id)
   };
 
   // We will use this function in a later section
   const removeFromFavorites = (movie) => {
     setFavorites( favorites.filter(
-      (mId) => mId !== movie.id
+      (mId) => mId !== movie.id.toString()
     ) )
+
+    console.log("delete in context", movie.id)
+    deleteFavourite(userName, movie.id);
   };
+
+  const loadFavourites = () => {
+    // let newFav = []
+    // const fav = await getFavourites(userName);
+    // console.log("fav", fav)
+    // newFav = [...favorites, fav]
+    // setFavorites(newFav)
+    
+    if(!isFavoritesLoaded){
+      getFavourites(userName).then((response) => {
+        if (response) setFavorites(response);
+      });
+      setFavouriteLoaded(true);
+    }
+
+  }
 
   const addReview = (movie, review) => {
     setMyReviews( {...myReviews, [movie.id]: review } )
@@ -83,8 +106,10 @@ const MoviesContextProvider = (props) => {
     <MoviesContext.Provider
       value={{
         favorites,
+        setFavorites,
         addToFavorites,
         removeFromFavorites,
+        loadFavourites,
         addReview,
         mustWatch,
         addMustWatch,

@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { getFavourites } from "../../api/tmdb-api";
+import { useQuery } from 'react-query';
 import Login from "../login";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -22,13 +24,15 @@ const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const SiteHeader = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const {isAuthenticated, signout, removeToken} = useContext(MoviesContext);
+  const {isAuthenticated, signout, loadFavourites} = useContext(MoviesContext);
   const open = Boolean(anchorEl);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
+
+  loadFavourites();
 
   const menuOptions = [
     { label: "Home", path: "/" },

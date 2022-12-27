@@ -78,4 +78,20 @@ router.get('/:userName/favourites', asyncHandler(async(req, res) => {
     res.status(200).json(user.favourites);
 }));
 
+router.post('/:userName/favourites/delete', asyncHandler(async(req, res) => {
+    const newFavourite = req.body.id;
+    const userName = req.params.userName;
+    // const movie = await movieModel.findByMovieDBId(newFavourite);
+    const user = await User.findByUserName(userName);
+
+    let newFavourites = await user.favourites;
+    for (var i = 0; i <= newFavourites.length - 1; i++) {
+        if (newFavourites[i] == newFavourite) {
+            newFavourites.splice(i, 1);
+        }
+    }
+    await user.save();
+    res.status(201).json(user);
+}));
+
 export default router;

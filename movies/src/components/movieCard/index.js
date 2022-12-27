@@ -19,11 +19,10 @@ import img from '../../images/film-poster-placeholder.png'
 export default function MovieCard({ movie, action }) {
   const { favorites } = useContext(MoviesContext);
   const { mustWatch } = useContext(MoviesContext);
-  const { user } = useContext(MoviesContext);
 
   const isMovie = Boolean(movie.title);
 
-  if (favorites.find((id) => id === movie.id)) {
+  if (favorites.find((id) => id === movie.id.toString())) {
     movie.favorite = true;
   } else {
     movie.favorite = false

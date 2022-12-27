@@ -274,8 +274,10 @@ export const addFavourite = (username, id) => {
 };
 
 export const getFavourites = (username) => {
+    // const [, idPart] = args.queryKey;
+    // const { username } = idPart;
     return fetch(
-            `/api/users/${username}`
+            `/api/users/${username}/favourites`
         ).then((response) => {
             if (!response.ok) {
                 throw new Error(response.json().message);
@@ -285,4 +287,14 @@ export const getFavourites = (username) => {
         .catch((error) => {
             throw error
         });
+};
+
+export const deleteFavourite = (username, id) => {
+    return fetch(`/api/users/${username}/favourites/delete`, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify({ id: id })
+    }).then((res) => res.json())
 };

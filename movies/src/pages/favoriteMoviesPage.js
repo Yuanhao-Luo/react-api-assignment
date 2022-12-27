@@ -1,14 +1,29 @@
 import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
-import { useQueries } from "react-query";
-import { getMovie } from "../api/tmdb-api";
+import { useQueries, useQuery } from "react-query";
+import { getMovie, getFavourites } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
 
 const FavoriteMoviesPage = () => {
-  const { favorites: movieIds } = useContext(MoviesContext);
+  const { favorites: movieIds, loadFavourites } = useContext(MoviesContext);
+  // loadFavourites();
+
+
+    // console.log('username', userName)
+    // const { data: fav, isLoading: il1 } = useQuery(
+    //   ["favourite", { username: userName }],
+    //   getFavourites
+    // )
+
+
+
+
+  // console.log(fav)
+
+  console.log("movie id", movieIds)
 
   // Create an array of queries and run in parallel.
   const favoriteMovieQueries = useQueries(
@@ -45,7 +60,8 @@ const FavoriteMoviesPage = () => {
           </>
         );
       }}
-    />
+    >
+    </PageTemplate>
   );
 };
 
