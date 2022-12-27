@@ -75,7 +75,6 @@ export const getMovieImages = (args) => {
                 throw new Error(response.json().message);
             }
             return response.json();
-
         })
         .catch((error) => {
             throw error
@@ -84,7 +83,7 @@ export const getMovieImages = (args) => {
 
 export const getMovieReviews = (id) => {
     return fetch(
-            `https://api.themoviedb.org/3/movie/${args}/reviews?api_key=${process.env.REACT_APP_TMDB_KEY}`
+            `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${process.env.REACT_APP_TMDB_KEY}`
         )
         .then((res) => res.json())
         .then((json) => {
@@ -120,7 +119,6 @@ export const getCompanyImages = (args) => {
                 throw new Error(response.json().message);
             }
             return response.json();
-
         })
         .catch((error) => {
             throw error

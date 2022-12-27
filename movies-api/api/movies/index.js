@@ -70,4 +70,34 @@ router.get('/tmdb/discover', asyncHandler(async(req, res) => {
     res.status(200).json(result);
 }));
 
+
+router.get('/tmdb/genres', asyncHandler(async(req, res) => {
+    const result = await api.getGenres();
+    res.status(200).json(result);
+}));
+
+
+router.get('/tmdb/now_playing', asyncHandler(async(req, res) => {
+    const page = req.query.page;
+
+    const result = await api.getNowPlaying(page);
+    res.status(200).json(result);
+}));
+
+
+router.get('/tmdb/popular', asyncHandler(async(req, res) => {
+    const page = req.query.page;
+
+    const result = await api.getPopular(page);
+    res.status(200).json(result);
+}));
+
+
+router.get('/tmdb/top_rated', asyncHandler(async(req, res) => {
+    const page = req.query.page;
+
+    const result = await api.getTopRatedTV(page);
+    res.status(200).json(result);
+}));
+
 export default router;
