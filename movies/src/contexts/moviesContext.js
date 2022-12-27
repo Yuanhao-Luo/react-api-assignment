@@ -9,9 +9,11 @@ const MoviesContextProvider = (props) => {
   const [mustWatch, setMustWatch] = useState( [] )
   const [user, setUser] = useState( null );
   const existingToken = localStorage.getItem("token");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const existingUsername = localStorage.getItem("username");
+  const existingAuthenticated = localStorage.getItem("authenticated") === "true";
+  const [isAuthenticated, setIsAuthenticated] = useState(existingAuthenticated);
   const [authToken, setAuthToken] = useState(existingToken);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState(existingUsername);
 
   const addToFavorites = (movie) => {
     let newFavorites = [];
@@ -59,6 +61,8 @@ const MoviesContextProvider = (props) => {
         setToken(result.token)
         setIsAuthenticated(true);
         setUserName(username);
+        localStorage.setItem("username", username);
+        localStorage.setItem("authenticated", true)
       }
     };
   
@@ -70,6 +74,9 @@ const MoviesContextProvider = (props) => {
   
     const signout = () => {
       setTimeout(() => setIsAuthenticated(false), 100);
+      setToken(null);
+      localStorage.setItem("username", null);
+      localStorage.setItem("authenticated", null)
     }
 
   return (
@@ -87,7 +94,7 @@ const MoviesContextProvider = (props) => {
         authenticate,
         register,
         signout,
-        userName
+        userName,
       }}
     >
       {props.children}

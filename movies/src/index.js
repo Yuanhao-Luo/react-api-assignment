@@ -15,6 +15,7 @@ import CompanyPage from "./pages/companyPage"
 import NowPlayingPage from "./pages/nowPlayingPage";
 import PopularPage from "./pages/popularPage";
 import TopRatedTVPage from "./pages/topRatedTVPage";
+import ProtectedRoutes from "./protectedRoutes/protectedRoutes";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,15 +36,18 @@ const App = () => {
         <Routes>
           <Route exact path="/movies/favorites" element={<FavoriteMoviesPage />} />
           <Route exact path="/movies/upcoming" element={<UpcomingPage />} />
-          <Route path="/movies/:id" element={<MoviePage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="*" element={ <Navigate to="/" /> } />
-          <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
-          <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
-          <Route path="/companies/:id" element={ <CompanyPage /> } />
           <Route path="/movies/now_playing" element={ <NowPlayingPage /> } />
           <Route path="/movies/popular" element={ <PopularPage /> } />
           <Route path="/tv/top_rated" element={ <TopRatedTVPage /> } />
+
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/movies/:id" element={<MoviePage />} />
+            <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
+            <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
+            <Route path="/companies/:id" element={ <CompanyPage /> } />
+          </Route>
         </Routes>
         </MoviesContextProvider>
       </BrowserRouter>

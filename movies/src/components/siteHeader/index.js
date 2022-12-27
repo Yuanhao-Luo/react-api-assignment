@@ -22,7 +22,7 @@ const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const SiteHeader = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const {isAuthenticated, signout} = useContext(MoviesContext);
+  const {isAuthenticated, signout, removeToken} = useContext(MoviesContext);
   const open = Boolean(anchorEl);
 
   const theme = useTheme();
@@ -40,6 +40,8 @@ const SiteHeader = () => {
 
   if(isAuthenticated){
     menuOptions.push({ label: "Favorites", path: "/movies/favorites" });
+  }else {
+    // removeToken();
   }
 
   const handleMenuSelect = (pageURL) => {
