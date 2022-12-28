@@ -20,13 +20,17 @@ router.post('/', asyncHandler(async(req, res, next) => {
         return next();
     }
     if (req.query.action === 'register') {
-        let reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/
-        if (reg.test(req.body.password)) {
-            await User.create(req.body);
-            res.status(201).json({ code: 201, msg: 'Successful created new user.' });
-        } else {
-            res.status(401).json({ success: false, msg: 'BadPassword' });
+        // let reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/
+        const user = await User.findByUserName(req.body.username);
+        if (user) {
+            return res.status(401).json({ code: 401, msg: 'User exist.' });
         }
+        await User.create(req.body);
+        res.status(201).json({ code: 201, msg: 'Successful created new user.' });
+        // if (reg.test(req.body.password)) {
+        // } else {
+        //     res.status(401).json({ success: false, msg: 'BadPassword' });
+        // }
 
     } else {
         const user = await User.findByUserName(req.body.username);

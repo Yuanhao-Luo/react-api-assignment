@@ -243,7 +243,7 @@ export const getTopRatedTV = (args) => {
 };
 
 export const login = (username, password) => {
-    return fetch('/api/users', {
+    return fetch('/api/users?action=login', {
         headers: {
             'Content-Type': 'application/json'
         },

@@ -4,6 +4,7 @@ import moviesRouter from './api/movies';
 import genresRouter from './api/genres';
 import usersRouter from './api/users';
 import moviesAuthRouter from './api/movies-auth';
+import reviewsRouter from './api/reviews'
 import session from 'express-session';
 import authenticate from './authenticate';
 import passport from './authenticate';
@@ -33,6 +34,7 @@ app.use('/api/movies', moviesRouter);
 app.use('/api/movies-auth', passport.authenticate('jwt', { session: false }), moviesAuthRouter);
 app.use('/api/genres', genresRouter)
 app.use('/api/users', usersRouter);
+app.use('/api/reviews', reviewsRouter);
 app.use(errHandler);
 
 app.listen(port, () => {

@@ -88,13 +88,14 @@ const MoviesContextProvider = (props) => {
         localStorage.setItem("username", username);
         localStorage.setItem("authenticated", true)
       }
-      console.log("before return")
-      return (result.code == 201) ? true : false
+      console.log("code: ", result.code)
+      return (result.code != 401) ? true : false;
     };
   
     const register = async (username, password) => {
       const result = await signup(username, password);
-      console.log(result.code);
+
+      console.log("code_r: ", result.code)
       return (result.code == 201) ? true : false;
     };
   
