@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { login, signup, getFavourites, addFavourite, deleteFavourite } from "../api/tmdb-api";
+import { login, signup, getFavourites, addFavourite, deleteFavourite, writeReview } from "../api/tmdb-api";
 
 export const MoviesContext = React.createContext(null);
 
@@ -58,6 +58,9 @@ const MoviesContextProvider = (props) => {
 
   const addReview = (movie, review) => {
     setMyReviews( {...myReviews, [movie.id]: review } )
+
+    writeReview(review);
+
   };
   // console.log(myReviews);
 
@@ -88,14 +91,12 @@ const MoviesContextProvider = (props) => {
         localStorage.setItem("username", username);
         localStorage.setItem("authenticated", true)
       }
-      console.log("code: ", result.code)
       return (result.code != 401) ? true : false;
     };
   
     const register = async (username, password) => {
       const result = await signup(username, password);
 
-      console.log("code_r: ", result.code)
       return (result.code == 201) ? true : false;
     };
   

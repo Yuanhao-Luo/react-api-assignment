@@ -250,7 +250,6 @@ export const login = (username, password) => {
         method: 'post',
         body: JSON.stringify({ username: username, password: password })
     }).then(res => res.json())
-
 };
 
 export const signup = (username, password) => {
@@ -297,4 +296,14 @@ export const deleteFavourite = (username, id) => {
         method: 'post',
         body: JSON.stringify({ id: id })
     }).then((res) => res.json())
+};
+
+export const writeReview = (review) => {
+    return fetch('/api/reviews', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify({ review: review })
+    }).then(res => res.json())
 };

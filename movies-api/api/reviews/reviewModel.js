@@ -3,8 +3,11 @@ import bcrypt from 'bcrypt-nodejs';
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-    username: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    favourites: [{ type: String }]
+const ReviewSchema = new Schema({
+    author: { type: String },
+    review: { type: String },
+    rating: { type: Number },
+    movieId: { type: String}
 });
+
+export default mongoose.model('Review', ReviewSchema);

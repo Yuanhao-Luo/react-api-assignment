@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
-import { addFavourite } from "../../api/tmdb-api";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -10,7 +9,6 @@ const AddToFavoritesIcon = ({ movie }) => {
   const handleAddToFavorites = (e) => {
     e.preventDefault();
     context.addToFavorites(movie);
-    // addFavourite(context.userName, movie.id)
   };
 
   return (

@@ -11,43 +11,30 @@ const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    // const [isGoodPassword, setGoodPassword] = useState(false);
     const {authenticate, register} = useContext(MoviesContext);
 
     const handleLogin = () => {
         authenticate(username, password).then((result) => {
-            console.log("res", result)
             if(!result){
                 setError("Wrong password or username");
             }else{
-                console.log("return to home")
                 props.action(false);
             }
-        });
-        
-
-        
+        });  
     }
 
     const handleRegister = () => {
         if(password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/)){
             register(username, password).then((result) => {
-                console.log("res register", result)
-
                 if(!result){
                     setError("Account exist")
                 }else{
-                    console.log("return home register")
                     props.action(false);
                 }
             })
-
-
         }else{
             setError("The password should contain at least one uppercase letter, one lowercase letters and one digital")
         }
-
-        
     }
 
     const handleUsername = (e) => {
