@@ -40,6 +40,7 @@ const SiteHeader = () => {
     { label: "Now Playing", path: "/movies/now_playing" },
     { label: "Popular", path: "/movies/popular" },
     { label: "TV", path: "/tv/top_rated" },
+    { label: "Recommand", path: "/movies/recommand"}
   ];
 
   if(isAuthenticated){

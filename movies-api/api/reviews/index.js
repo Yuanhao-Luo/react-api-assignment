@@ -9,6 +9,7 @@ const router = express.Router(); // eslint-disable-line
 
 router.post('/', asyncHandler(async(req, res) => {
     await Review.create(req.body.review);
+    res.status(200).json(result);
 }));
 
 

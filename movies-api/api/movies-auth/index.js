@@ -54,4 +54,11 @@ router.get('/tmdb/similar/:id', asyncHandler(async(req, res) => {
     res.status(200).json(result);
 }));
 
+router.get('/tmdb/recommand/:id', asyncHandler(async(req, res) => {
+    const id = req.params.id;
+
+    const result = await api.getRecommand(id);
+    res.status(200).json(result);
+}));
+
 export default router;

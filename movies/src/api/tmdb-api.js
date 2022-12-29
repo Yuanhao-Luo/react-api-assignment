@@ -307,3 +307,23 @@ export const writeReview = (review) => {
         body: JSON.stringify({ review: review })
     }).then(res => res.json())
 };
+
+export const getRecommand = (args) => {
+    const [, idPart] = args.queryKey;
+    const { id } = idPart;
+    return fetch(
+            `/api/movies-auth/tmdb/recommand/${id}`, {
+                headers: {
+                    'Authorization': window.localStorage.getItem('token')
+                }
+            }
+        ).then((response) => {
+            if (!response.ok) {
+                throw new Error(response.json().message);
+            }
+            return response.json();
+        })
+        .catch((error) => {
+            throw error
+        });
+};
